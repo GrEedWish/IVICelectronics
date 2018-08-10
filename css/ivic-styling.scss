@@ -130,3 +130,101 @@ body {
 		}
 	}
 }
+
+
+
+
+
+.ta-c {
+  text-align: center;
+}
+
+.ta-l {
+  text-align: left;
+}
+
+.ta-r {
+  text-align: right;
+}
+
+.ta-j {
+  test-align: justify;
+}
+
+.jc-c {
+  -webkit-box-justify-content: center;
+  justify-content: center;
+}
+
+.jc-sa {
+  -webkit-box-justify-content: space-around;
+  justify-content: space-around;
+}
+
+.fh {
+  height: 100%;
+}
+
+.fw {
+  width: 100%;
+}
+
+.flexbox-center {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: warp;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+}
+
+.hidden {
+  display: none;
+}
+
+// Margin and Padding helper classes.
+@mixin spacer-factory($prop, $alias, $use-important: true){
+  $directions: (
+    top: t,
+    right: r,
+    bottom: b,
+    left: l
+  );
+
+  $spacer: 18px !default;
+  $spacers: (
+    0: 0,
+    1: ($spacer * .25),
+    2: ($spacer * .5),
+    3: $spacer,
+    4: ($spacer * 1.5),
+    5: ($spacer * 3),
+    6: ($spacer * 4.5),
+  ) !default;
+
+  $important: if($use-important == true, " !important", "");
+  
+  @each $i, $length in $spacers {
+    .#{$alias}a-#{$i} {
+      #{$prop}: #{$length}#{$important};
+    }
+    .#{$alias}x-#{$i} {
+      #{$prop}-left: #{$length}#{$important};
+      #{$prop}-right: #{$length}#{$important};
+    }
+    .#{$alias}y-#{$i} {
+      #{$prop}-top: #{$length}#{$important};
+      #{$prop}-bottom: #{$length}#{$important};
+    }
+
+    @each $direction, $direction-alias in $directions {
+      .#{$alias}#{$direction-alias}-#{$i} {
+        #{$prop}-#{$direction}: #{$length}#{$important};
+      }
+    }
+  }
+}
+
+@include spacer-factory(margin, m);
+@include spacer-factory(padding, p);
+

@@ -1,67 +1,74 @@
-var products_data_url = 'data/VFC.json';
+var products_data_url = 'data/VFC.json' 
 
-$.getJSON(products_data_url , function(data) {
-  var tbl_body = document.createElement('tbody');
-  var odd_even = false;
-  $.each(data, function() {
-    var tbl_row = tbl_body.insertRow();
-    var legal = true;
-    tbl_row.className = odd_even ? 'odd' : 'even';
-    $.each(this, function(k , v) {
-    	if (k == 'link') {
-        if (v){
-          var a = document.createElement('a');
-          a.title = '点击查看详情';
-          a.href = v.toString();
-          a.target = '_blank';
-          a.innerHTML = tbl_row.firstChild.innerHTML;
-          tbl_row.firstChild.innerHTML = ''
-          tbl_row.firstChild.appendChild(a);
-        }
-    	}
-    	else {
-    		var cell = tbl_row.insertCell();
-      	cell.appendChild(document.createTextNode(v.toString()));
-    	}
-
-      if (k == 'Cap' && window.location.href.split('-')[1]) {
+$(document).ready(function() {
+  $.getJSON(products_data_url , function(dataSource) {
+    dataSource = dataSource.filter(function (value, index){
+      try {
         var pfClass = window.location.href.split('-')[1].split('.')[0]
-        console.log(pfClass)
-        var pf = parseInt(v.split('±')[0])
+        var pf = parseInt(value['Cap'].split('±')[0])
         switch(pfClass){
           case '1':
-            if (pf >= 100) {
-              tbl_row.remove()
-            }
-            break;
+            if (pf < 100)
+              return true
+            break 
           case '2':
-            if (pf < 100 || pf >= 400) {
-              console.log(pf)
-              tbl_row.remove()
-            }
-            break;
+            if (pf >= 100 && pf < 400)
+              return true
+            break 
           case '3':
-            if (pf < 400 || pf >= 1000) {
-              tbl_row.remove()
-            }
-            break;
+            if (pf >= 400 && pf < 1000)
+              return true
+            break 
           case '4':
-            if (pf < 1000) {
-              tbl_row.remove()
-            }
-            break;
+            if (pf > 1000)
+              return true
+            break 
           default:
-            break;
+            return false 
+            break 
         }
-        
+      } catch(e) {
+        return true
       }
+      return false
     })
-    odd_even = !odd_even;            
-  })
-  $(tbl_body).appendTo("#ivic-products");
-});
+    var table = $('#ivic-products').DataTable({
+      // orderCellsTop: true,
+      // fixedHeader: true,
+      data: dataSource,
+      columns: [
+          { data : "Model",
+            render: function ( data, type, row ) {
+              if (row['link'] && row['link'].trim().length)
+                return data = '<a href="' + row['link'] + '">' + data + '</a>' 
+              else
+                return data 
+            }
+          },
+          { data : "CometReferenceModel" },
+          { data : "JenningsReferenceModel" },
+          { data : "Cap" },
+          { data : "PeakTestVoltage" },
+          { data : "RFPeakWorkingVoltage" },
+          { data : "MaxRFCurrent" },
+          { data : "DimensionsDiam" },
+          { data : "DimensionsLength" },
+          { data : "MaximumWeight" }
+      ],
+      // drawCallback: function( settings ){
+      //   var api = this.api() 
 
-$(document).ready(function () {
-  var jsTable = $('#ivic-products').DataTable( {
-  });
-});
+      //   api.columns().every( function () {
+      //     var data = this.data() 
+      //     console.log( api.rows( {page:'current'} ).data() )
+      //     // if($.inArray('O', data) !== -1){
+      //     //    $(this.nodes()).addClass('highlight') 
+      //     // } else {
+      //     //    $(this.nodes()).removeClass('highlight') 
+      //     // }
+      //  }) 
+      // }
+
+    })
+  })
+})

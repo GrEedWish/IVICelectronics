@@ -19,27 +19,11 @@ body {
 	width: 15%!important;
 }
 
-.w-13 {
-	width: 13%!important;
-}
-
-.w-12 {
-	width: 12%!important;
-}
-
 .w-10 {
 	width: 10%!important;
 }
 
-.w-8 {
-	width: 8%!important;
-}
-
 .w-5 {
-	width: 5%!important;
-}
-
-.w-4 {
 	width: 5%!important;
 }
 
@@ -55,6 +39,7 @@ body {
 	background-color: #6b757c;
 	color: white;	
 }
+
 
 .navbar {
 	.ivic-header-img {
@@ -98,35 +83,45 @@ body {
 #ivic-products {
 	th {
 		text-align: center;
+    vertical-align: middle;
 		padding: 0 0.65rem;
-		background-color: #b8bfc5 !important;
-		border-color: #101215 !important;
+		border-width: 0.1px;
+		border-color: black;
+		background-color: #6b757c;
 
 		@media only screen and (max-width: 991px) {
-			font-size: 12px !important;
+			font-size: 12px;
 		}
 	}
 	tbody {
 		text-algin: center;
+
+		tr {
+			&:hover {
+				background-color: #ffc107;
+			}
+		}
 	}
 	tr {
 		line-height: 1.2;
-		font-size: 14px !important;
+		font-size: 14px;
+		background-color: #6b757c;
     color: black;
 
     @media only screen and (max-width: 991px) {
-			font-size: 10px !important;
+			font-size: 10px;
 		}
 
 		&.odd {
-			background-color: #8885852e !important;
+			background-color: #88858545;
 		}
 		&.even {
-			background-color: #fbfbfb !important;
+			background-color: #fbfbfb;
 		}
-
 		td {
-			border-color: #101215 !important;
+			border-width: 0.1px;
+			border-color: black;
+			text-align: center;
 		}
 	}
 }

@@ -64,17 +64,17 @@
         "link": "/UpLoad/201407/2014070154825069.pdf"
     },
     {
-        "Model": "VHC1",
-        "JenningsReferenceModel": "VHC3",
-        "KilovacReferenceModel": "RJ1A-26S",
-        "ReferenceModel": "RJ1H-26S",
-        "VolPeakTestMaxKV": "HC-1",
-        "VoltageOperatingMaxContactstoBase": "HC-3",
-        "CurrentContinuousCarryMax": "---",
-        "ResistanceContactMax": 5,
-        "RatedCoilVoltage": 3.5,
-        "Mechlife": 18,
-        "link": 0.02
+        "Model": "VHC1,VHC3",
+        "JenningsReferenceModel": "RJ1A-26S,RJ1H-26S",
+        "KilovacReferenceModel": "HC-1,HC-3",
+        "ReferenceModel": "---",
+        "VolPeakTestMaxKV": 5,
+        "VoltageOperatingMaxContactstoBase": 3.5,
+        "CurrentContinuousCarryMax": 18,
+        "ResistanceContactMax": 0.02,
+        "RatedCoilVoltage": 26.5,
+        "Mechlife": "2×1000000",
+        "link": "UpLoad/201407/2014070154953785.pdf"
     },
     {
         "Model": "VJ2C",

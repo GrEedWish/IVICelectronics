@@ -1,67 +1,50 @@
 var products_data_url = 'data/VCPC.json';
 
-$.getJSON(products_data_url , function(data) {
-  var tbl_body = document.createElement('tbody');
-  var odd_even = false;
-  $.each(data, function() {
-    var tbl_row = tbl_body.insertRow();
-    var legal = true;
-    tbl_row.className = odd_even ? 'odd' : 'even';
-    $.each(this, function(k , v) {
-    	if (k == 'link') {
-        if (v){
-          var a = document.createElement('a');
-          a.title = '点击查看详情';
-          a.href = v.toString();
-          a.target = '_blank';
-          a.innerHTML = tbl_row.firstChild.innerHTML;
-          tbl_row.firstChild.innerHTML = ''
-          tbl_row.firstChild.appendChild(a);
-        }
-    	}
-    	else {
-    		var cell = tbl_row.insertCell();
-      	cell.appendChild(document.createTextNode(v.toString()));
-    	}
-
-      if (k == 'Cap' && window.location.href.split('-')[1]) {
-        var pfClass = window.location.href.split('-')[1].split('.')[0]
-        console.log(pfClass)
-        var pf = parseInt(v.split('±')[0])
-        switch(pfClass){
-          case '1':
-            if (pf >= 100) {
-              tbl_row.remove()
+$(document).ready(function() {
+  $.getJSON(products_data_url , function(dataSource) {
+    // dataSource = dataSource.filter(function (value, index){
+    //   try {
+    //     var pfClass = window.location.href.split('-')[1].split('.')[0]
+    //     switch(pfClass){
+    //       case '1':
+    //         if (category_2.indexOf(value['Model']) === -1)
+    //           return true
+    //         break
+    //       case '2':
+    //         if (category_2.indexOf(value['Model']) != -1)
+    //           return true
+    //         break 
+    //       default:
+    //         return false 
+    //         break 
+    //     }
+    //   } catch(e) {
+    //     return true
+    //   }
+    //   return false
+    // })
+    var table = $('#ivic-products').DataTable({
+      // orderCellsTop: true,
+      // fixedHeader: true,
+      data: dataSource,
+      columns: [
+          { data : "1",
+            render: function ( data, type, row ) {
+              if (row['link'] && row['link'].trim().length)
+                return data = '<a href="' + row['link'] + '">' + data + '</a>' 
+              else
+                return data 
             }
-            break;
-          case '2':
-            if (pf < 100 || pf >= 400) {
-              console.log(pf)
-              tbl_row.remove()
-            }
-            break;
-          case '3':
-            if (pf < 400 || pf >= 1000) {
-              tbl_row.remove()
-            }
-            break;
-          case '4':
-            if (pf < 1000) {
-              tbl_row.remove()
-            }
-            break;
-          default:
-            break;
-        }
-        
-      }
+          },
+          { data : "2" },
+          { data : "3" },
+          { data : "4" },
+          { data : "5" },
+          { data : "6" },
+          { data : "7" },
+          { data : "8" },
+          { data : "9" }
+      ]
     })
-    odd_even = !odd_even;            
   })
-  $(tbl_body).appendTo("#ivic-products");
-});
-
-$(document).ready(function () {
-  var jsTable = $('#ivic-products').DataTable( {
-  });
-});
+})
